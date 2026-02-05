@@ -19,6 +19,8 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     * {
@@ -76,6 +78,9 @@
       pointer-events: none;
       font-size: 1.2rem;
       opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     /* Falling hearts for YES screen */
@@ -101,6 +106,9 @@
       animation: fallHeart linear infinite;
       pointer-events: none;
       opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     /* Rain drops for NO screen */
@@ -125,6 +133,9 @@
       animation: rainDrop linear infinite;
       pointer-events: none;
       opacity: 0;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     /* Leaf animation */
@@ -153,6 +164,9 @@
       animation: fallingLeaf linear infinite;
       pointer-events: none;
       opacity: 0;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     /* Soft pulse */
@@ -325,9 +339,13 @@
 
     /* Letter container - scrollable */
     .letter-scroll {
-      max-height: 65vh;
+      max-height: none;
       overflow-y: auto;
       padding-right: 8px;
+      -webkit-overflow-scrolling: touch;
+      will-change: scroll-position;
+      backface-visibility: hidden;
+      transform: translateZ(0);
     }
 
     .letter-scroll::-webkit-scrollbar {
@@ -367,7 +385,7 @@
      </div>
     </div>
    </div><!-- YES SCREEN - SHE STILL LOVES ME -->
-   <div id="yesScreen" class="screen screen-hidden absolute inset-0 flex flex-col overflow-y-auto p-4 md:p-6" style="background: linear-gradient(135deg, #f5b3b3 0%, #f5d0a0 30%, #f5d8c4 100%);"><!-- Falling hearts -->
+   <div id="yesScreen" class="screen screen-hidden absolute inset-0 flex flex-col overflow-y-auto p-4 md:p-6" style="background: linear-gradient(135deg, #f5b3b3 0%, #f5d0a0 30%, #f5d8c4 100%); -webkit-overflow-scrolling: touch; backface-visibility: hidden; transform: translateZ(0);"><!-- Falling hearts -->
     <div id="fallingHearts" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Home button --> <button id="homeFromYes" class="home-btn">🏠</button> <!-- Letter container -->
     <div class="relative z-10 flex flex-col items-center flex-1 pt-20 pb-6">
      <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-lg w-full glow-subtle" style="backdrop-filter: blur(2px);"><!-- Letter icon -->
@@ -385,24 +403,26 @@
      </div>
     </div>
    </div><!-- NO SCREEN - SHE NO LONGER FEELS THE SAME -->
-   <div id="noScreen" class="screen screen-hidden absolute inset-0 flex flex-col items-center justify-center p-6 overflow-y-auto" style="background: linear-gradient(135deg, #c5d5e0 0%, #b5c8d8 50%, #b8c9d8 100%);"><!-- Rain and leaves -->
-    <div id="rainContainer" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Home button --> <button id="homeFromNo" class="home-btn">🏠</button> <!-- Goodbye card -->
-    <div class="relative z-10 bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-lg w-full text-center mt-20 glow-subtle" style="backdrop-filter: blur(2px);">
-     <div class="text-7xl mb-8">
-      🍂
-     </div><!-- Goodbye message -->
-     <div class="font-readable text-gray-800 leading-relaxed space-y-5 mb-8 text-left">
-      <p id="goodnessOpening" class="font-romantic text-lg text-gray-700 font-bold">Archana,</p>
-      <p>Thank you for being honest. Love that once mattered should never end in lies.</p>
-      <p>If your feelings have changed, I accept that — without anger, without blame. What we shared was real for the time it existed, and that truth doesn't disappear just because things feel different now.</p>
-      <p id="birthdayMessageNo" class="text-gray-700 italic">And since your birthday is on 8th February, I still want to say this: I genuinely wish you peace, happiness, and a future that feels right to you. May you always be surrounded by people who understand you and moments that make you smile without effort.</p>
-      <p>No matter where life takes us, I respect what we had — and I respect your truth today.</p>
-      <p class="font-romantic text-gray-700 font-bold">I wish you well. Always.</p>
-     </div><!-- Closing line -->
-     <div class="pt-6 border-t-2 border-gray-300 mb-6">
-      <p class="font-readable text-gray-600 italic font-bold">"I respect your answer."</p>
-     </div><!-- Buttons -->
-     <div class="flex flex-col gap-3"><a id="whatsappNoBtn" href="" target="_blank" rel="noopener noreferrer" class="btn-secondary bg-gradient-to-r from-green-400 to-green-500 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2 text-center no-underline"> <span>💚</span> <span>Send Reply on WhatsApp</span> </a> <button id="homeFromNoBtn" class="btn-secondary bg-gray-400 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2"> <span>🏠</span> <span>Go Back Home</span> </button> <button id="closeBtn" class="text-gray-600 font-readable font-bold py-2 flex items-center justify-center gap-2 transition-colors hover:text-gray-800"> <span>❌</span> <span>Close</span> </button>
+   <div id="noScreen" class="screen screen-hidden absolute inset-0 flex flex-col p-4 md:p-6 overflow-y-auto" style="background: linear-gradient(135deg, #c5d5e0 0%, #b5c8d8 50%, #b8c9d8 100%); -webkit-overflow-scrolling: touch; backface-visibility: hidden; transform: translateZ(0);"><!-- Rain and leaves -->
+    <div id="rainContainer" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Home button --> <button id="homeFromNo" class="home-btn">🏠</button> <!-- Content wrapper with top spacing -->
+    <div class="relative z-10 flex flex-col items-center w-full pt-24 pb-8"><!-- Goodbye card -->
+     <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-lg w-full glow-subtle" style="backdrop-filter: blur(2px);">
+      <div class="text-center text-7xl mb-8">
+       🍂
+      </div><!-- Goodbye message -->
+      <div class="font-readable text-gray-800 leading-relaxed space-y-5 mb-8 text-left">
+       <p id="goodnessOpening" class="font-romantic text-lg text-gray-700 font-bold">Archana,</p>
+       <p>Thank you for being honest. Love that once mattered should never end in lies.</p>
+       <p>If your feelings have changed, I accept that — without anger, without blame. What we shared was real for the time it existed, and that truth doesn't disappear just because things feel different now.</p>
+       <p id="birthdayMessageNo" class="text-gray-700 italic">And since your birthday is on 8th February, I still want to say this: I genuinely wish you peace, happiness, and a future that feels right to you. May you always be surrounded by people who understand you and moments that make you smile without effort.</p>
+       <p>No matter where life takes us, I respect what we had — and I respect your truth today.</p>
+       <p class="font-romantic text-gray-700 font-bold">I wish you well. Always.</p>
+      </div><!-- Closing line -->
+      <div class="pt-6 border-t-2 border-gray-300 mb-6">
+       <p class="font-readable text-gray-600 italic font-bold text-center">"I respect your answer."</p>
+      </div><!-- Buttons -->
+      <div class="flex flex-col gap-3"><a id="whatsappNoBtn" href="" target="_blank" rel="noopener noreferrer" class="btn-secondary bg-gradient-to-r from-green-400 to-green-500 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2 text-center no-underline"> <span>💚</span> <span>Send Reply on WhatsApp</span> </a> <button id="homeFromNoBtn" class="btn-secondary bg-gray-400 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2"> <span>🏠</span> <span>Go Back Home</span> </button> <button id="closeBtn" class="text-gray-600 font-readable font-bold py-2 flex items-center justify-center gap-2 transition-colors hover:text-gray-800"> <span>❌</span> <span>Close</span> </button>
+      </div>
      </div>
     </div>
    </div><!-- FOOTER - Always visible on home screen -->
@@ -726,5 +746,5 @@
 
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c90e355e0589f61',t:'MTc3MDI3ODU3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c90fab236797fdf',t:'MTc3MDI3OTUyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
