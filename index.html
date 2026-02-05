@@ -21,6 +21,7 @@
       padding: 0;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      -webkit-touch-callout: none;
     }
 
     * {
@@ -80,7 +81,10 @@
       opacity: 0;
       will-change: transform, opacity;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      contain: layout style paint;
     }
 
     /* Falling hearts for YES screen */
@@ -108,7 +112,10 @@
       opacity: 0;
       will-change: transform, opacity;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      contain: layout style paint;
     }
 
     /* Rain drops for NO screen */
@@ -135,7 +142,10 @@
       opacity: 0;
       will-change: transform;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      contain: layout style paint;
     }
 
     /* Leaf animation */
@@ -166,7 +176,10 @@
       opacity: 0;
       will-change: transform;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      contain: layout style paint;
     }
 
     /* Soft pulse */
@@ -183,6 +196,7 @@
     .screen {
       transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), 
                   transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      contain: layout style;
     }
 
     .screen-hidden {
@@ -341,11 +355,19 @@
     .letter-scroll {
       max-height: none;
       overflow-y: auto;
+      overflow-x: hidden;
       padding-right: 8px;
       -webkit-overflow-scrolling: touch;
+      -webkit-user-select: text;
+      user-select: text;
+      contain: layout style paint;
       will-change: scroll-position;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      perspective: 1000px;
+      -webkit-perspective: 1000px;
       transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
 
     .letter-scroll::-webkit-scrollbar {
@@ -746,5 +768,5 @@
 
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c90fab236797fdf',t:'MTc3MDI3OTUyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c91072935727e69',t:'MTc3MDI4MDA0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
