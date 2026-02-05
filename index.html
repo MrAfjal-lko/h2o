@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Do You Still Love Me, Archana?</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;family=Dancing+Script:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body, #app {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .font-romantic {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      letter-spacing: 0.5px;
+    }
+
+    .font-readable {
+      font-family: 'Lora', Georgia, serif;
+    }
+
+    .font-letter {
+      font-family: 'Dancing Script', 'Lora', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.9;
+      letter-spacing: 0.3px;
+      color: #3d2323;
+    }
+
+    /* Floating hearts animation - subtle */
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100%) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.4;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100%) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    .floating-heart {
+      position: absolute;
+      animation: floatHeart linear infinite;
+      pointer-events: none;
+      font-size: 1.2rem;
+      opacity: 0;
+    }
+
+    /* Falling hearts for YES screen */
+    @keyframes fallHeart {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(calc(100% + 30px)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .falling-heart {
+      position: absolute;
+      animation: fallHeart linear infinite;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* Rain drops for NO screen */
+    @keyframes rainDrop {
+      0% {
+        transform: translateY(-10px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+    }
+
+    .rain-drop {
+      position: absolute;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(120, 140, 160, 0.4));
+      animation: rainDrop linear infinite;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* Leaf animation */
+    @keyframes fallingLeaf {
+      0% {
+        transform: translateY(-20px) rotate(0deg) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.4;
+      }
+      50% {
+        transform: translateY(50%) rotate(180deg) translateX(15px);
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(100%) rotate(360deg) translateX(-10px);
+        opacity: 0;
+      }
+    }
+
+    .falling-leaf {
+      position: absolute;
+      animation: fallingLeaf linear infinite;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* Soft pulse */
+    @keyframes softPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .soft-pulse {
+      animation: softPulse 2s ease-in-out infinite;
+    }
+
+    /* Screen transitions */
+    .screen {
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .screen-hidden {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      transform: scale(0.98);
+    }
+
+    .screen-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Subtle glow */
+    @keyframes subtleGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 200, 200, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(255, 200, 200, 0.3); }
+    }
+
+    .glow-subtle {
+      animation: subtleGlow 4s ease-in-out infinite;
+    }
+
+    /* Button animations */
+    .btn-primary {
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(200, 100, 100, 0.25);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0px);
+    }
+
+    .btn-secondary {
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(100, 100, 100, 0.2);
+    }
+
+    /* Footer styling */
+    .footer-badge {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 200, 200, 0.3);
+    }
+
+    .footer-text {
+      color: #6b2c2c;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* Home button - always accessible */
+    .home-btn {
+      z-index: 50;
+      position: fixed;
+      top: 1.25rem;
+      left: 1.25rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .home-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    .home-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Letter container - scrollable */
+    .letter-scroll {
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+
+    .letter-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .letter-scroll::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+    }
+
+    .letter-scroll::-webkit-scrollbar-thumb {
+      background: rgba(200, 100, 100, 0.3);
+      border-radius: 10px;
+    }
+
+    .letter-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(200, 100, 100, 0.5);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full overflow-hidden">
+  <div id="app" class="relative w-full h-full"><!-- HOME SCREEN -->
+   <div id="homeScreen" class="screen screen-visible absolute inset-0 flex flex-col items-center justify-center p-6" style="background: linear-gradient(135deg, #f5d5d0 0%, #e8d5c4 50%, #f0d8cc 100%);"><!-- Subtle floating hearts -->
+    <div id="floatingHearts" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Main card -->
+    <div class="relative z-10 bg-white rounded-3xl shadow-xl p-8 md:p-12 max-w-md w-full text-center glow-subtle">
+     <div class="soft-pulse text-5xl mb-6">
+      💕
+     </div>
+     <h1 id="mainQuestion" class="font-romantic text-2xl md:text-3xl text-gray-800 font-bold leading-relaxed mb-3">Do you still love me, Archana?</h1>
+     <p class="font-readable text-sm text-gray-600 italic mb-8">Be honest. This matters to me.</p><!-- Buttons -->
+     <div class="flex flex-col gap-4"><button id="yesBtn" class="btn-primary bg-gradient-to-r from-rose-400 to-pink-500 text-white font-romantic text-lg font-bold py-4 px-8 rounded-full shadow-lg flex items-center justify-center gap-2"> <span>❤️</span> <span>YES</span> </button> <button id="noBtn" class="btn-secondary bg-gray-300 text-gray-700 font-romantic text-lg font-bold py-4 px-8 rounded-full shadow-md flex items-center justify-center gap-2"> <span>💔</span> <span>NO</span> </button>
+     </div>
+    </div>
+   </div><!-- YES SCREEN - SHE STILL LOVES ME -->
+   <div id="yesScreen" class="screen screen-hidden absolute inset-0 flex flex-col overflow-y-auto p-4 md:p-6" style="background: linear-gradient(135deg, #f5b3b3 0%, #f5d0a0 30%, #f5d8c4 100%);"><!-- Falling hearts -->
+    <div id="fallingHearts" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Home button --> <button id="homeFromYes" class="home-btn">🏠</button> <!-- Letter container -->
+    <div class="relative z-10 flex flex-col items-center flex-1 pt-20 pb-6">
+     <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 max-w-lg w-full glow-subtle"><!-- Letter icon -->
+      <div class="text-center mb-6"><span class="text-5xl soft-pulse inline-block">💌</span>
+      </div><!-- Letter content with scrolling -->
+      <div class="letter-scroll font-readable text-gray-800 space-y-4 mb-6">
+       <div id="letterContent"><!-- Typewriter content goes here -->
+       </div>
+      </div><!-- Letter ending (hidden until typed) -->
+      <div id="letterEnd" class="hidden pt-6 border-t-2 border-pink-200">
+       <p class="font-romantic text-lg text-pink-600 italic text-center font-bold mb-6">"This answer still means more to me than you'll ever know."</p>
+       <div class="flex flex-col gap-3"><button id="readAgainBtn" class="btn-primary bg-gradient-to-r from-rose-400 to-pink-500 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center gap-2"> <span>💌</span> <span>Read Again</span> </button> <a id="whatsappYesBtn" href="" target="_blank" rel="noopener noreferrer" class="btn-primary bg-gradient-to-r from-green-400 to-green-500 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-lg flex items-center justify-center gap-2 text-center no-underline"> <span>💚</span> <span>Reply on WhatsApp</span> </a> <button id="homeFromYesBtn" class="btn-secondary bg-gray-200 text-gray-700 font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2"> <span>🏠</span> <span>Go Back Home</span> </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- NO SCREEN - SHE NO LONGER FEELS THE SAME -->
+   <div id="noScreen" class="screen screen-hidden absolute inset-0 flex flex-col items-center justify-center p-6 overflow-y-auto" style="background: linear-gradient(135deg, #c5d5e0 0%, #b5c8d8 50%, #b8c9d8 100%);"><!-- Rain and leaves -->
+    <div id="rainContainer" class="absolute inset-0 overflow-hidden pointer-events-none"></div><!-- Home button --> <button id="homeFromNo" class="home-btn">🏠</button> <!-- Goodbye card -->
+    <div class="relative z-10 bg-white rounded-3xl shadow-xl p-8 md:p-10 max-w-lg w-full text-center mt-20">
+     <div class="text-5xl mb-6">
+      🍂
+     </div><!-- Goodbye message -->
+     <div class="font-readable text-gray-800 leading-relaxed space-y-4 mb-6 text-left">
+      <p id="goodnessOpening" class="font-romantic text-lg text-gray-700 font-bold">Archana,</p>
+      <p>Thank you for being honest. Love that once mattered should never end in lies.</p>
+      <p>If your feelings have changed, I accept that — without anger, without blame. What we shared was real for the time it existed, and that truth doesn't disappear just because things feel different now.</p>
+      <p id="birthdayMessageNo" class="text-gray-700 italic">And since your birthday is on 8th February, I still want to say this: I genuinely wish you peace, happiness, and a future that feels right to you. May you always be surrounded by people who understand you and moments that make you smile without effort.</p>
+      <p>No matter where life takes us, I respect what we had — and I respect your truth today.</p>
+      <p class="font-romantic text-gray-700 font-bold">I wish you well. Always.</p>
+     </div><!-- Closing line -->
+     <div class="pt-6 border-t-2 border-gray-300 mb-6">
+      <p class="font-readable text-gray-600 italic font-bold">"I respect your answer."</p>
+     </div><!-- Buttons -->
+     <div class="flex flex-col gap-3"><a id="whatsappNoBtn" href="" target="_blank" rel="noopener noreferrer" class="btn-secondary bg-gradient-to-r from-green-400 to-green-500 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2 text-center no-underline"> <span>💚</span> <span>Send Reply on WhatsApp</span> </a> <button id="homeFromNoBtn" class="btn-secondary bg-gray-400 text-white font-romantic text-lg font-bold py-3 px-6 rounded-full shadow-md flex items-center justify-center gap-2"> <span>🏠</span> <span>Go Back Home</span> </button> <button id="closeBtn" class="text-gray-600 font-readable font-bold py-2 flex items-center justify-center gap-2 transition-colors hover:text-gray-800"> <span>❌</span> <span>Close</span> </button>
+     </div>
+    </div>
+   </div><!-- FOOTER - Always visible on home screen -->
+   <div id="footerContainer" class="fixed bottom-0 left-0 right-0 z-40 flex justify-center p-4 pointer-events-none">
+    <div class="footer-badge rounded-full px-6 py-3 pointer-events-auto flex items-center justify-center gap-2"><span class="footer-text font-romantic text-sm">Made with love</span>
+     <svg width="16" height="16" viewbox="0 0 24 24" fill="#ec4899" style="flex-shrink: 0;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+     </svg><span class="footer-text font-romantic text-sm">Afjal</span>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      main_question: "Do you still love me, Archana?",
+      recipient_name: "Archana",
+      your_name: "Afjal",
+      her_birthday: "8th February",
+      whatsapp_number: "+917897416559"
+    };
+
+    // Pre-made responses
+    const premadeResponses = {
+      yes: "Yes, I still love you 💕 Read your message and it means everything to me.",
+      no: "I'm sorry, my feelings have changed. Thank you for asking honestly."
+    };
+
+    // Love letter for YES - mature and emotional
+    let yesLetterLines = [];
+
+    // Goodbye message for NO - respectful
+    let currentScreen = 'home';
+    let typingInterval = null;
+
+    // Generate WhatsApp link
+    function generateWhatsAppLink(phoneNumber, message) {
+      const encodedMessage = encodeURIComponent(message);
+      // Remove + from phone number for WhatsApp API
+      const cleanNumber = phoneNumber.replace(/\D/g, '');
+      return `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
+    }
+
+    // Initialize letter content
+    function initializeLetterContent(config) {
+      const name = config.recipient_name || defaultConfig.recipient_name;
+      const yourName = config.your_name || defaultConfig.your_name;
+      const birthday = config.her_birthday || defaultConfig.her_birthday;
+
+      yesLetterLines = [
+        `${name}, 💕`,
+        "",
+        "This question isn't about doubt — it's about honesty. 🤝",
+        "Because when feelings are real, they deserve to be checked, not assumed.",
+        "",
+        "Being with you has never felt like habit to me. ✨",
+        "It has always felt like *choice*.",
+        "A choice I make calmly, sincerely, without confusion.",
+        "",
+        "I still see you the same way — 👀",
+        "With respect, affection, and a quiet kind of love",
+        "that doesn't need noise to exist. 🤫💫",
+        "",
+        "Every time I'm with you, I choose you again. 🫂",
+        "Over and over.",
+        "",
+        "If you're saying yes today, then know this: 💎",
+        "I don't take it lightly.",
+        "Your love isn't something I expect by default.",
+        "It's something I *value* — deeply. 💗",
+        "",
+        `And since your birthday is on ${birthday}... 🎂✨`,
+        "",
+        "May your days be lighter, your heart always safe. 🕊️",
+        "May your smile never be forced.",
+        "May you always know how much you matter. 🌟",
+        "",
+        "Whether we're laughing, struggling, or growing together,",
+        "I want your birthday to remind you that you are",
+        "loved, understood, and never taken for granted. 🫶",
+        "",
+        "Thank you for still choosing me. 🙏💕",
+        "Thank you for being honest, for being real.",
+        "Thank you for loving me back.",
+        "",
+        `With all my love, 💝`,
+        `${yourName} 💖`
+      ];
+
+      // Update goodbye message
+      document.getElementById('goodnessOpening').textContent = `${name},`;
+      document.getElementById('birthdayMessageNo').innerHTML = `
+        And since your birthday is on ${birthday}, I still want to say this: I genuinely wish you peace, happiness, and a future that feels right to you. May you always be surrounded by people who understand you and moments that make you smile without effort.
+      `;
+      document.getElementById('mainQuestion').textContent = config.main_question || defaultConfig.main_question;
+    }
+
+    // Create floating hearts
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      container.innerHTML = '';
+
+      const hearts = ['💕', '💗', '🌸'];
+
+      for (let i = 0; i < 8; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${7 + Math.random() * 10}s`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.fontSize = `${0.8 + Math.random() * 1.2}rem`;
+        container.appendChild(heart);
+      }
+    }
+
+    // Create falling hearts for YES screen
+    function createFallingHearts() {
+      const container = document.getElementById('fallingHearts');
+      container.innerHTML = '';
+
+      const hearts = ['💕', '💗', '❤️'];
+
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'falling-heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${5 + Math.random() * 8}s`;
+        heart.style.animationDelay = `${Math.random() * 10}s`;
+        heart.style.fontSize = `${1 + Math.random() * 1.3}rem`;
+        container.appendChild(heart);
+      }
+    }
+
+    // Create rain and leaves for NO screen
+    function createRainAndLeaves() {
+      const container = document.getElementById('rainContainer');
+      container.innerHTML = '';
+
+      // Rain drops
+      for (let i = 0; i < 25; i++) {
+        const drop = document.createElement('div');
+        drop.className = 'rain-drop';
+        drop.style.left = `${Math.random() * 100}%`;
+        drop.style.height = `${12 + Math.random() * 20}px`;
+        drop.style.animationDuration = `${0.8 + Math.random() * 1.2}s`;
+        drop.style.animationDelay = `${Math.random() * 2.5}s`;
+        container.appendChild(drop);
+      }
+
+      // Leaves
+      const leaves = ['🍂', '🍃'];
+      for (let i = 0; i < 6; i++) {
+        const leaf = document.createElement('div');
+        leaf.className = 'falling-leaf';
+        leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+        leaf.style.left = `${Math.random() * 100}%`;
+        leaf.style.animationDuration = `${6 + Math.random() * 10}s`;
+        leaf.style.animationDelay = `${Math.random() * 5}s`;
+        leaf.style.fontSize = `${1 + Math.random() * 0.8}rem`;
+        container.appendChild(leaf);
+      }
+    }
+
+    // Typewriter effect
+    function typeLoveLetter() {
+      const container = document.getElementById('letterContent');
+      const endSection = document.getElementById('letterEnd');
+      container.innerHTML = '';
+      endSection.classList.add('hidden');
+
+      let lineIndex = 0;
+      let charIndex = 0;
+      let currentParagraph = null;
+
+      if (typingInterval) {
+        clearInterval(typingInterval);
+      }
+
+      typingInterval = setInterval(() => {
+        if (lineIndex >= yesLetterLines.length) {
+          clearInterval(typingInterval);
+          endSection.classList.remove('hidden');
+          return;
+        }
+
+        const currentLine = yesLetterLines[lineIndex];
+
+        if (charIndex === 0) {
+          currentParagraph = document.createElement('p');
+          currentParagraph.className = 'font-letter text-gray-700';
+          if (lineIndex === 0) {
+            currentParagraph.className = 'font-letter text-gray-700 font-bold text-xl';
+          }
+          container.appendChild(currentParagraph);
+        }
+
+        if (currentLine === '') {
+          lineIndex++;
+          charIndex = 0;
+          return;
+        }
+
+        if (charIndex < currentLine.length) {
+          currentParagraph.textContent = currentLine.substring(0, charIndex + 1);
+          charIndex++;
+        } else {
+          lineIndex++;
+          charIndex = 0;
+        }
+      }, 28);
+    }
+
+    // Screen navigation
+    function showScreen(screenName) {
+      const screens = ['homeScreen', 'yesScreen', 'noScreen'];
+
+      screens.forEach(id => {
+        const screen = document.getElementById(id);
+        const isTarget = id === screenName + 'Screen';
+        
+        if (isTarget) {
+          screen.classList.remove('screen-hidden');
+          screen.classList.add('screen-visible');
+        } else {
+          screen.classList.add('screen-hidden');
+          screen.classList.remove('screen-visible');
+        }
+      });
+
+      // Update footer visibility
+      if (screenName === 'home') {
+        document.getElementById('footerContainer').style.display = 'flex';
+      } else {
+        document.getElementById('footerContainer').style.display = 'none';
+      }
+
+      currentScreen = screenName;
+
+      if (screenName === 'home') {
+        createFloatingHearts();
+        if (typingInterval) clearInterval(typingInterval);
+      } else if (screenName === 'yes') {
+        createFallingHearts();
+        setTimeout(typeLoveLetter, 600);
+      } else if (screenName === 'no') {
+        createRainAndLeaves();
+      }
+    }
+
+    // Update config
+    async function onConfigChange(config) {
+      initializeLetterContent(config);
+      document.getElementById('mainQuestion').textContent = config.main_question || defaultConfig.main_question;
+      
+      // Update WhatsApp links
+      const whatsappNumber = config.whatsapp_number || defaultConfig.whatsapp_number;
+      const yesLink = generateWhatsAppLink(whatsappNumber, premadeResponses.yes);
+      const noLink = generateWhatsAppLink(whatsappNumber, premadeResponses.no);
+      
+      const whatsappYesBtn = document.getElementById('whatsappYesBtn');
+      const whatsappNoBtn = document.getElementById('whatsappNoBtn');
+      
+      if (whatsappYesBtn) whatsappYesBtn.href = yesLink;
+      if (whatsappNoBtn) whatsappNoBtn.href = noLink;
+    }
+
+    // Initialize
+    function init() {
+      initializeLetterContent(defaultConfig);
+      createFloatingHearts();
+
+      // Set up WhatsApp links
+      const whatsappNumber = defaultConfig.whatsapp_number;
+      const yesLink = generateWhatsAppLink(whatsappNumber, premadeResponses.yes);
+      const noLink = generateWhatsAppLink(whatsappNumber, premadeResponses.no);
+      
+      const whatsappYesBtn = document.getElementById('whatsappYesBtn');
+      const whatsappNoBtn = document.getElementById('whatsappNoBtn');
+      
+      if (whatsappYesBtn) whatsappYesBtn.href = yesLink;
+      if (whatsappNoBtn) whatsappNoBtn.href = noLink;
+
+      // Event listeners
+      document.getElementById('yesBtn').addEventListener('click', () => showScreen('yes'));
+      document.getElementById('noBtn').addEventListener('click', () => showScreen('no'));
+
+      document.getElementById('homeFromYes').addEventListener('click', () => showScreen('home'));
+      document.getElementById('homeFromNo').addEventListener('click', () => showScreen('home'));
+      document.getElementById('homeFromYesBtn').addEventListener('click', () => showScreen('home'));
+      document.getElementById('homeFromNoBtn').addEventListener('click', () => showScreen('home'));
+
+      document.getElementById('readAgainBtn').addEventListener('click', () => {
+        typeLoveLetter();
+      });
+
+      document.getElementById('closeBtn').addEventListener('click', () => {
+        showScreen('home');
+      });
+
+      // Element SDK initialization
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["main_question", config.main_question || defaultConfig.main_question],
+            ["recipient_name", config.recipient_name || defaultConfig.recipient_name],
+            ["your_name", config.your_name || defaultConfig.your_name],
+            ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
+            ["her_birthday", config.her_birthday || defaultConfig.her_birthday]
+          ])
+        });
+      }
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c90b7d4c7627fdf',t:'MTc3MDI3Njc5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
